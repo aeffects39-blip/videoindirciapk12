@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="tr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#000000"><title>Medya İndirme Merkezi</title>
+<style>
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+body{font-family:'Segoe UI',system-ui,sans-serif;color:var(--txt);min-height:100vh;display:flex;justify-content:center;
+background:linear-gradient(160deg,var(--bg1),var(--bg2));background-attachment:fixed;padding:max(18px,env(safe-area-inset-top)) 14px 40px}
+.orb{position:fixed;width:46vmax;height:46vmax;border-radius:50%;background:radial-gradient(circle,var(--acc),transparent 65%);
+opacity:.22;filter:blur(30px);pointer-events:none}
+.o1{top:-15vmax;left:-12vmax;animation:f1 22s ease-in-out infinite alternate}
+.o2{bottom:-18vmax;right:-14vmax;animation:f2 26s ease-in-out infinite alternate}
+@keyframes f1{to{transform:translate(18vw,16vh) scale(1.2)}}
+@keyframes f2{to{transform:translate(-20vw,-14vh) scale(1.15)}}
+.kart{position:relative;width:100%;max-width:580px;height:fit-content;margin-top:2vh;border:1px solid var(--brd);border-radius:24px;
+padding:22px 20px 24px;background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(14px);
+box-shadow:0 20px 60px rgba(0,0,0,.35);animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(24px) scale(.98)}}
+.ust{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+h1{font-size:1.45rem}.alt{color:var(--mut);font-size:.8rem;margin-top:3px}
+.cizgi{height:3px;width:0;background:var(--acc);border-radius:3px;margin-top:8px;animation:grow .9s .3s ease forwards}
+@keyframes grow{to{width:90px}}
+.etk{display:block;color:var(--mut);font-size:.7rem;font-weight:700;letter-spacing:.08em;margin:18px 0 7px}
+input{width:100%;background:var(--inp);color:var(--txt);border:1px solid var(--brd);border-radius:12px;padding:13px 14px;font-size:1rem;
+outline:none;transition:border-color .25s,box-shadow .25s}
+input:focus{border-color:var(--acc);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 28%,transparent)}
+.btn{display:block;width:100%;text-align:center;text-decoration:none;border:0;cursor:pointer;color:#fff;font-weight:700;font-size:.95rem;
+padding:13px 16px;border-radius:12px;background:var(--acc);transition:transform .15s,filter .25s,box-shadow .25s;margin-top:10px}
+.btn:hover{filter:brightness(1.15);box-shadow:0 6px 20px color-mix(in srgb,var(--acc) 40%,transparent)}.btn:active{transform:scale(.97)}
+.gh{background:var(--inp);color:var(--txt);width:auto;margin:0;padding:8px 12px;font-size:.8rem;border:1px solid var(--brd)}
+.seg{position:relative;display:flex;background:var(--inp);border-radius:14px;padding:4px;border:1px solid var(--brd)}
+.pill{position:absolute;top:4px;bottom:4px;left:4px;width:calc(33.333% - 2.67px);background:var(--acc);border-radius:10px;
+transition:transform .35s cubic-bezier(.3,1.2,.4,1)}
+.seg button{position:relative;flex:1;background:none;border:0;color:var(--txt);font-size:.82rem;font-weight:600;padding:11px 2px;
+cursor:pointer;transition:color .3s}.seg button.on{color:#fff}
+#liste{max-height:340px;overflow:auto;background:var(--inp);border:1px solid var(--brd);border-radius:14px;padding:6px}
+.bos{color:var(--mut);font-size:.85rem;text-align:center;padding:22px 10px}
+.satir{display:flex;align-items:center;gap:10px;padding:11px 10px;border-radius:11px;cursor:pointer;
+animation:rise .45s both;transition:background .2s,transform .15s}
+.satir:hover{background:color-mix(in srgb,var(--acc) 22%,var(--inp))}.satir:active{transform:scale(.98)}
+.kod{font-weight:700;font-size:.78rem;min-width:52px;text-align:center;background:var(--brd);border-radius:8px;padding:4px 6px}
+.det{flex:1;font-size:.8rem;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.satir b{color:var(--acc)}
+.elle{display:flex;gap:10px;align-items:center}.elle input{flex:1;padding:11px 12px}.elle .btn{width:auto;margin:0;padding:11px 18px}
+.bar{height:8px;background:var(--inp);border-radius:8px;overflow:hidden;margin-top:22px;position:relative}
+.dolgu{height:100%;width:0;border-radius:8px;transition:width .5s ease;background:linear-gradient(90deg,var(--acc),color-mix(in srgb,var(--acc) 60%,#fff))}
+.aktif .dolgu::after{content:"";position:absolute;top:0;bottom:0;width:60px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);
+animation:shine 1.2s linear infinite}
+@keyframes shine{from{left:-60px}to{left:100%}}
+#durum{color:var(--mut);font-size:.85rem;margin-top:9px;min-height:1.2em}
+#toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,90px);background:var(--card);color:var(--txt);border:1px solid var(--acc);
+padding:12px 18px;border-radius:14px;font-size:.88rem;max-width:90vw;transition:transform .4s cubic-bezier(.3,1.3,.5,1);z-index:9}
+#toast.on{transform:translate(-50%,0)}
+</style></head><body>
+<div class="orb o1"></div><div class="orb o2"></div>
+<main class="kart">
+ <div class="ust"><div><h1>Medya İndirme Merkezi</h1><div class="alt">yt-dlp • ffmpeg • tek dokunuşla indirme</div><div class="cizgi"></div></div>
+ <button class="btn gh" id="temaBtn"></button></div>
+
+ <span class="etk">VİDEO LİNKİ</span>
+ <input id="link" type="url" inputmode="url" placeholder="https://..." autocomplete="off">
+ <button class="btn" id="listeBtn">Formatları Listele</button>
+
+ <span class="etk">İNDİRME TÜRÜ</span>
+ <div class="seg"><div class="pill"></div>
+  <button data-m="ses" class="on">🎵 Sadece Ses</button><button data-m="video">🎬 Sadece Görüntü</button><button data-m="birlesik">🎞️ Görüntü+Ses</button></div>
+
+ <span class="etk">FORMATLAR · BİR SATIRA DOKUNUNCA İNDİRME BAŞLAR</span>
+ <div id="liste"><div class="bos">Önce bir link girip "Formatları Listele"ye dokunun.</div></div>
+
+ <span class="etk">ELLE FORMAT KODU (İSTEĞE BAĞLI)</span>
+ <div class="elle"><input id="kod" placeholder="Örn: 137+140" autocomplete="off"><button class="btn" id="elleBtn">⬇ İndir</button></div>
+
+ <div class="bar" id="bar"><div class="dolgu"></div></div>
+ <div id="durum">Hazır</div>
+ <a class="btn" id="kaydet" hidden download>⬇ Dosyayı Telefona Kaydet</a>
+</main><div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s), R=document.documentElement;
+const T={
+ yesil:{n:'🟢 Zümrüt',bg1:'#06200f',bg2:'#010403',acc:'#16a34a',card:'#0b120e',inp:'#131e17',txt:'#f1f5f2',mut:'#8aa393',brd:'#1f3a2a'},
+ mavi:{n:'🔵 Okyanus',bg1:'#07173a',bg2:'#010306',acc:'#2563eb',card:'#0a1018',inp:'#111a28',txt:'#eef2f9',mut:'#8a9bb3',brd:'#1e3150'},
+ kirmizi:{n:'🔴 Yakut',bg1:'#2e0808',bg2:'#040101',acc:'#dc2626',card:'#140b0b',inp:'#1e1313',txt:'#f8eeee',mut:'#b39090',brd:'#4a2222'},
+ karanlik:{n:'🟣 Gece',bg1:'#12091f',bg2:'#000000',acc:'#8b5cf6',card:'#0f0d14',inp:'#191622',txt:'#f3f0fa',mut:'#9a93ad',brd:'#2d2640'},
+ aydinlik:{n:'☀️ Aydınlık',bg1:'#dbe6fb',bg2:'#ffffff',acc:'#2563eb',card:'#ffffff',inp:'#f1f5f9',txt:'#1e293b',mut:'#64748b',brd:'#cbd5e1'}};
+const AD=Object.keys(T), K=['bg1','bg2','acc','card','inp','txt','mut','brd'];
+K.forEach(k=>{try{CSS.registerProperty({name:'--'+k,syntax:'<color>',inherits:true,initialValue:'#000'})}catch(e){}});
+let ti=Math.max(0,AD.indexOf(localStorage.tema)), mod='ses', pin=localStorage.kod||'', timer=null;
+function tema(){const t=T[AD[ti]];K.forEach(k=>R.style.setProperty('--'+k,t[k]));$('#temaBtn').textContent=t.n;
+ $('meta[name=theme-color]').content=t.bg2;localStorage.tema=AD[ti]}
+tema();setTimeout(()=>R.style.transition=K.map(k=>'--'+k+' .8s ease').join(','),50);
+$('#temaBtn').onclick=()=>{ti=(ti+1)%AD.length;tema()};
+
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t.z);t.z=setTimeout(()=>t.classList.remove('on'),3600)}
+document.querySelectorAll('.seg button').forEach((b,i)=>b.onclick=()=>{
+ mod=b.dataset.m;document.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x===b));
+ $('.pill').style.transform=`translateX(${i*100}%)`});
+
+const IK={ses:'🎵',video:'🎬',birlesik:'🎞️',diger:'🖼️'};
+function listele(){
+ const link=$('#link').value.trim();if(!link)return toast('Önce bir link girin');
+ $('#durum').textContent='Formatlar alınıyor…';$('#liste').innerHTML='<div class="bos">⏳ Yükleniyor…</div>';
+ Android.formatlar(link)}
+window.onFormatlar=j=>{
+ if(j.hata){$('#liste').innerHTML='<div class="bos">Liste alınamadı.</div>';$('#durum').textContent='Hata ✗';return toast(j.hata)}
+ const L=$('#liste');L.innerHTML='';
+ j.formatlar.forEach((f,i)=>{const s=document.createElement('div');s.className='satir';s.style.animationDelay=Math.min(i*25,500)+'ms';
+  s.innerHTML='<span></span><span class="kod"></span><span class="det"></span><b>⬇</b>';
+  s.children[0].textContent=IK[f.tur];s.children[1].textContent=f.kod;s.children[2].textContent=f.detay;
+  s.onclick=()=>indir(f.kod,f.tur);L.appendChild(s)});
+ $('#durum').textContent=j.formatlar.length+' format bulundu — indirmek için dokunun'};
+function indir(kod,ftur){
+ const link=$('#link').value.trim();if(!link)return toast('Önce bir link girin');
+ $('#kaydet').hidden=true;$('.dolgu').style.width='0%';$('#durum').textContent='İndirme başlatılıyor…';
+ $('#bar').classList.add('aktif');Android.indir(link,mod,kod,ftur)}
+window.onIlerleme=(p,msg)=>{$('.dolgu').style.width=p+'%';$('#durum').textContent=msg};
+window.onBitti=ad=>{$('#bar').classList.remove('aktif');$('.dolgu').style.width='100%';
+ $('#durum').textContent='Tamamlandı ✓ · İndirilenler/MedyaIndirici/'+ad;toast('Kaydedildi: İndirilenler/MedyaIndirici')};
+window.onHata=msg=>{$('#bar').classList.remove('aktif');$('#durum').textContent='Hata ✗';toast(msg)};
+
+$('#listeBtn').onclick=listele;$('#elleBtn').onclick=()=>indir($('#kod').value.trim(),'manuel');
+$('#link').addEventListener('keydown',e=>{if(e.key==='Enter')listele()});
+</script></body></html>
