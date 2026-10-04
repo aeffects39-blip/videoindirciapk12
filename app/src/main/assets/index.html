@@ -1,61 +1,61 @@
 <!DOCTYPE html>
 <html lang="tr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#000000"><title>Medya İndirme Merkezi</title>
+<meta name="theme-color" content="#000000"><title>Video İndirme Merkezi</title>
 <style>
 *{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
 body{font-family:'Segoe UI',system-ui,sans-serif;color:var(--txt);min-height:100vh;display:flex;justify-content:center;
-background:linear-gradient(160deg,var(--bg1),var(--bg2));background-attachment:fixed;padding:max(18px,env(safe-area-inset-top)) 14px 40px}
+background:linear-gradient(160deg,var(--bg1),var(--bg2));background-attachment:fixed;padding:max(28px,env(safe-area-inset-top)) 20px 56px}
 .orb{position:fixed;width:46vmax;height:46vmax;border-radius:50%;background:radial-gradient(circle,var(--acc),transparent 65%);
 opacity:.22;filter:blur(30px);pointer-events:none}
 .o1{top:-15vmax;left:-12vmax;animation:f1 22s ease-in-out infinite alternate}
 .o2{bottom:-18vmax;right:-14vmax;animation:f2 26s ease-in-out infinite alternate}
 @keyframes f1{to{transform:translate(18vw,16vh) scale(1.2)}}
 @keyframes f2{to{transform:translate(-20vw,-14vh) scale(1.15)}}
-.kart{position:relative;width:100%;max-width:580px;height:fit-content;margin-top:2vh;border:1px solid var(--brd);border-radius:24px;
-padding:22px 20px 24px;background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(14px);
+.kart{position:relative;width:100%;max-width:580px;height:fit-content;margin-top:3vh;border:1px solid var(--brd);border-radius:28px;
+padding:32px 26px 36px;background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(14px);
 box-shadow:0 20px 60px rgba(0,0,0,.35);animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
 @keyframes rise{from{opacity:0;transform:translateY(24px) scale(.98)}}
 .ust{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-h1{font-size:1.45rem}.alt{color:var(--mut);font-size:.8rem;margin-top:3px}
-.cizgi{height:3px;width:0;background:var(--acc);border-radius:3px;margin-top:8px;animation:grow .9s .3s ease forwards}
+h1{font-size:1.5rem;line-height:1.25}.alt{color:var(--mut);font-size:.8rem;margin-top:3px}
+.cizgi{height:3px;width:0;background:var(--acc);border-radius:3px;margin-top:14px;animation:grow .9s .3s ease forwards}
 @keyframes grow{to{width:90px}}
-.etk{display:block;color:var(--mut);font-size:.7rem;font-weight:700;letter-spacing:.08em;margin:18px 0 7px}
-input{width:100%;background:var(--inp);color:var(--txt);border:1px solid var(--brd);border-radius:12px;padding:13px 14px;font-size:1rem;
+.etk{display:block;color:var(--mut);font-size:.7rem;font-weight:700;letter-spacing:.08em;margin:30px 0 12px;line-height:1.5}
+input{width:100%;background:var(--inp);color:var(--txt);border:1px solid var(--brd);border-radius:14px;padding:16px 16px;font-size:1rem;
 outline:none;transition:border-color .25s,box-shadow .25s}
 input:focus{border-color:var(--acc);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 28%,transparent)}
 .btn{display:block;width:100%;text-align:center;text-decoration:none;border:0;cursor:pointer;color:#fff;font-weight:700;font-size:.95rem;
-padding:13px 16px;border-radius:12px;background:var(--acc);transition:transform .15s,filter .25s,box-shadow .25s;margin-top:10px}
+padding:16px 18px;border-radius:14px;background:var(--acc);transition:transform .15s,filter .25s,box-shadow .25s;margin-top:16px}
 .btn:hover{filter:brightness(1.15);box-shadow:0 6px 20px color-mix(in srgb,var(--acc) 40%,transparent)}.btn:active{transform:scale(.97)}
-.gh{background:var(--inp);color:var(--txt);width:auto;margin:0;padding:8px 12px;font-size:.8rem;border:1px solid var(--brd)}
-.seg{position:relative;display:flex;background:var(--inp);border-radius:14px;padding:4px;border:1px solid var(--brd)}
-.pill{position:absolute;top:4px;bottom:4px;left:4px;width:calc(33.333% - 2.67px);background:var(--acc);border-radius:10px;
+.gh{background:var(--inp);color:var(--txt);width:auto;margin:0;padding:10px 14px;font-size:.8rem;border:1px solid var(--brd)}
+.seg{position:relative;display:flex;background:var(--inp);border-radius:16px;padding:5px;border:1px solid var(--brd)}
+.pill{position:absolute;top:5px;bottom:5px;left:5px;width:calc(33.333% - 3.33px);background:var(--acc);border-radius:10px;
 transition:transform .35s cubic-bezier(.3,1.2,.4,1)}
-.seg button{position:relative;flex:1;background:none;border:0;color:var(--txt);font-size:.82rem;font-weight:600;padding:11px 2px;
+.seg button{position:relative;flex:1;background:none;border:0;color:var(--txt);font-size:.82rem;font-weight:600;padding:15px 4px;
 cursor:pointer;transition:color .3s}.seg button.on{color:#fff}
-#liste{max-height:340px;overflow:auto;background:var(--inp);border:1px solid var(--brd);border-radius:14px;padding:6px}
-.bos{color:var(--mut);font-size:.85rem;text-align:center;padding:22px 10px}
-.satir{display:flex;align-items:center;gap:10px;padding:11px 10px;border-radius:11px;cursor:pointer;
+#liste{max-height:440px;overflow:auto;background:var(--inp);border:1px solid var(--brd);border-radius:16px;padding:10px}
+.bos{color:var(--mut);font-size:.88rem;line-height:1.5;text-align:center;padding:34px 14px}
+.satir{display:flex;align-items:center;gap:12px;padding:15px 12px;margin-bottom:4px;border-radius:12px;cursor:pointer;
 animation:rise .45s both;transition:background .2s,transform .15s}
 .satir:hover{background:color-mix(in srgb,var(--acc) 22%,var(--inp))}.satir:active{transform:scale(.98)}
 .kod{font-weight:700;font-size:.78rem;min-width:52px;text-align:center;background:var(--brd);border-radius:8px;padding:4px 6px}
 .det{flex:1;font-size:.8rem;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .satir b{color:var(--acc)}
-.elle{display:flex;gap:10px;align-items:center}.elle input{flex:1;padding:11px 12px}.elle .btn{width:auto;margin:0;padding:11px 18px}
-.bar{height:8px;background:var(--inp);border-radius:8px;overflow:hidden;margin-top:22px;position:relative}
+.elle{display:flex;gap:12px;align-items:center}.elle input{flex:1;min-width:0;padding:15px 14px}.elle .btn{width:auto;margin:0;padding:15px 20px}
+.bar{height:8px;background:var(--inp);border-radius:8px;overflow:hidden;margin-top:36px;position:relative}
 .dolgu{height:100%;width:0;border-radius:8px;transition:width .5s ease;background:linear-gradient(90deg,var(--acc),color-mix(in srgb,var(--acc) 60%,#fff))}
 .aktif .dolgu::after{content:"";position:absolute;top:0;bottom:0;width:60px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);
 animation:shine 1.2s linear infinite}
 @keyframes shine{from{left:-60px}to{left:100%}}
-#durum{color:var(--mut);font-size:.85rem;margin-top:9px;min-height:1.2em}
+#durum{color:var(--mut);font-size:.85rem;margin-top:12px;min-height:1.2em}
 #toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,90px);background:var(--card);color:var(--txt);border:1px solid var(--acc);
 padding:12px 18px;border-radius:14px;font-size:.88rem;max-width:90vw;transition:transform .4s cubic-bezier(.3,1.3,.5,1);z-index:9}
 #toast.on{transform:translate(-50%,0)}
 </style></head><body>
 <div class="orb o1"></div><div class="orb o2"></div>
 <main class="kart">
- <div class="ust"><div><h1>Medya İndirme Merkezi</h1><div class="alt">yt-dlp • ffmpeg • tek dokunuşla indirme</div><div class="cizgi"></div></div>
+ <div class="ust"><div><h1>Video İndirme Merkezi</h1><div class="cizgi"></div></div>
  <button class="btn gh" id="temaBtn"></button></div>
 
  <span class="etk">VİDEO LİNKİ</span>
