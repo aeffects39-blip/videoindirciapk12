@@ -12,20 +12,42 @@ jobs:
       - name: Kodu çek
         uses: actions/checkout@v4
 
+      - name: Java kur
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
       - name: Python kur
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Buildozer ile APK derle
-        uses: ArtemSBulgakov/buildozer-action@v1
-        id: buildozer
-        with:
-          command: buildozer android debug
-          buildozer_version: stable
+      - name: Sistem bağımlılıklarını kur
+        run: |
+          sudo apt update
+          sudo apt install -y git zip unzip autoconf libtool pkg-config \
+            zlib1g-dev libncurses-dev cmake libffi-dev libssl-dev build-essential libltdl-dev
 
-      - name: APK'yı yükle (artifact)
+      - name: Buildozer ve Cython kur
+        run: |
+          pip install --upgrade pip
+          pip install buildozer cython==0.29.36
+
+      - name: APK derle
+        run: |
+          yes | buildozer -v android debug
+
+      - name: Hata olursa derleme loglarını yükle
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: buildozer-log
+          path: .buildozer/android/platform/build-*/build.log
+          if-no-files-found: ignore
+
+      - name: APK'yı yükle
         uses: actions/upload-artifact@v4
         with:
           name: sahnebul-apk
-          path: ${{ steps.buildozer.outputs.filename }}
+          path: bin/*.apk
