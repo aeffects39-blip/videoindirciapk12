@@ -12,6 +12,17 @@ jobs:
       - name: Kodu çek
         uses: actions/checkout@v4
 
+      - name: buildozer.spec'in bulunduğu klasörü belirle
+        id: konum
+        run: |
+          DOSYA=$(find . -name buildozer.spec -not -path './.git/*' | head -n1)
+          if [ -z "$DOSYA" ]; then
+            echo "HATA: buildozer.spec repo içinde hiçbir yerde bulunamadı." >&2
+            exit 1
+          fi
+          echo "Bulundu: $DOSYA"
+          echo "dir=$(dirname "$DOSYA")" >> "$GITHUB_OUTPUT"
+
       - name: Java kur
         uses: actions/setup-java@v4
         with:
@@ -35,6 +46,7 @@ jobs:
           pip install buildozer cython==0.29.36
 
       - name: APK derle
+        working-directory: ${{ steps.konum.outputs.dir }}
         run: |
           yes | buildozer -v android debug
 
@@ -43,11 +55,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: buildozer-log
-          path: .buildozer/android/platform/build-*/build.log
+          path: ${{ steps.konum.outputs.dir }}/.buildozer/android/platform/build-*/build.log
           if-no-files-found: ignore
 
       - name: APK'yı yükle
         uses: actions/upload-artifact@v4
         with:
           name: sahnebul-apk
-          path: bin/*.apk
+          path: ${{ steps.konum.outputs.dir }}/bin/*.apk
