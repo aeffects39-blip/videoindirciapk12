@@ -1,0 +1,31 @@
+name: APK Derle
+
+on:
+  workflow_dispatch:        # Actions sekmesinden elle de tetiklenebilir
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Kodu çek
+        uses: actions/checkout@v4
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Buildozer ile APK derle
+        uses: ArtemSBulgakov/buildozer-action@v1
+        id: buildozer
+        with:
+          command: buildozer android debug
+          buildozer_version: stable
+
+      - name: APK'yı yükle (artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: sahnebul-apk
+          path: ${{ steps.buildozer.outputs.filename }}
